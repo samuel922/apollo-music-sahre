@@ -1,8 +1,9 @@
 import { Card, CardActions, CardContent, CardMedia, CircularProgress, IconButton, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { PlayArrow, Save } from "@mui/icons-material";
-import { GET_SONGS } from "../graphql/queries";
-import { useQuery } from "@apollo/client";
+// import { GET_SONGS } from "../graphql/subscription";
+import { GET_SONGS } from "../graphql/subscription";
+import { useSubscription } from "@apollo/client";
 
 const useStyles = makeStyles({
   loader: {
@@ -34,7 +35,7 @@ function SongList() {
 
   const classes = useStyles();
 
-  const {data, loading, error} = useQuery(GET_SONGS);
+  const {data, loading, error} = useSubscription(GET_SONGS);
 
   if (loading) {
     return (
