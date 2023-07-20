@@ -4,13 +4,17 @@ import App from './App';
 import { ThemeProvider } from '@mui/material';
 import { CssBaseline } from "@mui/material";
 import theme from './theme';
+import client from './graphql/client';
+import { ApolloProvider } from '@apollo/client';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </ApolloProvider>
   </React.StrictMode>
 );

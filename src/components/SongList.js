@@ -1,7 +1,8 @@
 import { Card, CardActions, CardContent, CardMedia, CircularProgress, IconButton, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { thumbnail  } from "../thumbnail";
 import { PlayArrow, Save } from "@mui/icons-material";
+import { GET_SONGS } from "../graphql/queries";
+import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles({
   loader: {
@@ -33,14 +34,7 @@ function SongList() {
 
   const classes = useStyles();
 
-  const song = {
-    title: "Kwach Ogolo Koke",
-    artist: "Prince Indah",
-    thumbnail: thumbnail,
-
-  }
-
-  const loading = false
+  const {data, loading, error} = useQuery(GET_SONGS);
 
   if (loading) {
     return (
@@ -50,10 +44,18 @@ function SongList() {
     )
   }
 
+  if (error) {
     return (
       <div>
-         {Array.from({ length: 10 }, () => song).map((song, i) => (
-          <Song key={i} song={song} />
+        <h3>Error Loading songs..</h3>
+      </div>
+    )
+  }
+
+    return (
+      <div>
+         {data.songs.map((song) => (
+          <Song key={song.id} song={song} />
          ))}
       </div>
     );
